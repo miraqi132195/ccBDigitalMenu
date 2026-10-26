@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
-import { CATEGORY_KEYS, getCategorySectionId } from '../constants/categories';
+import { getCategorySectionId, getVisibleCategoryKeys } from '../constants/categories';
 
 export function useActiveCategory(menu, headerOffset = 140) {
-  const [activeCategory, setActiveCategory] = useState(CATEGORY_KEYS[0]);
+  const [activeCategory, setActiveCategory] = useState(null);
 
   useEffect(() => {
     if (!menu) return undefined;
 
-    const visibleKeys = CATEGORY_KEYS.filter(
-      (key) => Array.isArray(menu[key]) && menu[key].length > 0,
-    );
+    const visibleKeys = getVisibleCategoryKeys(menu);
 
     if (visibleKeys.length === 0) return undefined;
 
@@ -38,5 +36,7 @@ export function useActiveCategory(menu, headerOffset = 140) {
     return () => observer.disconnect();
   }, [menu, headerOffset]);
 
-  return activeCategory;
+  const visibleKeys = menu ? getVisibleCategoryKeys(menu) : [];
+
+  return visibleKeys.includes(activeCategory) ? activeCategory : visibleKeys[0] ?? null;
 }

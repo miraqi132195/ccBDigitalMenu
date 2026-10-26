@@ -2,6 +2,9 @@ export const translations = {
   he: {
     restaurantName: 'Chilli Cheese Burger',
     slogan: 'signature taste',
+    menuLabel: 'תפריט דיגיטלי',
+    heroTitle: 'טעם ענק.',
+    heroTitleAccent: 'אפס פשרות.',
     heroSubtitle:
       'המבורגרים פרימיום מיוצרים בתשוקה. גלו את התפריט שלנו ומצאו את הטעם הבא שלכם.',
     browseMenu: 'לתפריט',
@@ -14,6 +17,15 @@ export const translations = {
     bread: 'לחם',
     toppings: 'תוספות',
     sauces: 'רטבים',
+    ingredients: 'מרכיבים',
+    steakOptions: 'אפשרויות סטייק',
+    itemsCount: '{count} פריטים',
+    backToMenu: 'חזרה לתפריט',
+    allergyTitle: 'אלרגנים ותזונה',
+    allergyNote: 'יש רגישויות או אלרגיות? פנו לצוות שלנו לפני ההזמנה.',
+    availabilityNote: 'שאלו את הצוות לגבי זמינות יומית והתאמות תזונתיות',
+    photoComingSoon: 'תמונה בקרוב',
+    freshFromKitchen: 'טרי מהמטבח',
     close: 'סגור',
     tryAgain: 'נסו שוב',
     loadErrorTitle: 'לא ניתן לטעון את התפריט',
@@ -23,6 +35,7 @@ export const translations = {
     emptySearchTitle: 'לא נמצאו פריטים',
     emptySearchMessage: 'נסו מילת חיפוש אחרת או עיינו בכל הקטגוריות.',
     language: 'שפה',
+    menuCategories: 'קטגוריות בתפריט',
     categories: {
       burgers: 'המבורגרים',
       chicken: 'עוף',
@@ -35,6 +48,9 @@ export const translations = {
   ar: {
     restaurantName: 'Chilli Cheese Burger',
     slogan: 'signature taste',
+    menuLabel: 'القائمة الرقمية',
+    heroTitle: 'نكهة كبيرة.',
+    heroTitleAccent: 'بلا أي تنازلات.',
     heroSubtitle:
       'برجر فاخر محضّر بشغف. استكشف قائمتنا واكتشف نكهتك المفضلة التالية.',
     browseMenu: 'تصفح القائمة',
@@ -47,6 +63,15 @@ export const translations = {
     bread: 'الخبز',
     toppings: 'الإضافات',
     sauces: 'الصلصات',
+    ingredients: 'المكونات',
+    steakOptions: 'خيارات الستيك',
+    itemsCount: '{count} أصناف',
+    backToMenu: 'العودة إلى القائمة',
+    allergyTitle: 'الحساسية والنظام الغذائي',
+    allergyNote: 'لديك حساسية أو قيود غذائية؟ يرجى إبلاغ طاقمنا قبل الطلب.',
+    availabilityNote: 'اسأل طاقمنا عن التوفر اليومي والتعديلات الغذائية',
+    photoComingSoon: 'الصورة قريباً',
+    freshFromKitchen: 'طازج من المطبخ',
     close: 'إغلاق',
     tryAgain: 'حاول مرة أخرى',
     loadErrorTitle: 'تعذّر تحميل القائمة',
@@ -56,6 +81,7 @@ export const translations = {
     emptySearchTitle: 'لا توجد نتائج',
     emptySearchMessage: 'جرّب كلمة بحث أخرى أو تصفّح جميع الفئات.',
     language: 'اللغة',
+    menuCategories: 'فئات القائمة',
     categories: {
       burgers: 'برجر',
       chicken: 'دجاج',
@@ -65,8 +91,72 @@ export const translations = {
       steaks: 'ستيك',
     },
   },
+  en: {
+    restaurantName: 'Chilli Cheese Burger',
+    slogan: 'signature taste',
+    menuLabel: 'Digital Menu',
+    heroTitle: 'Big flavor.',
+    heroTitleAccent: 'Zero compromise.',
+    heroSubtitle:
+      'Premium burgers crafted with passion. Explore our menu and find your next favorite bite.',
+    browseMenu: 'Browse menu',
+    searchPlaceholder: 'Search by name or description...',
+    clearSearch: 'Clear search',
+    tapForDetails: 'Tap for details →',
+    currentlyUnavailable: 'Currently unavailable',
+    basePrice: 'Base price',
+    sizes: 'Sizes',
+    bread: 'Bread',
+    toppings: 'Toppings',
+    sauces: 'Sauces',
+    ingredients: 'Ingredients',
+    steakOptions: 'Steak options',
+    itemsCount: '{count} items',
+    backToMenu: 'Back to menu',
+    allergyTitle: 'Allergens & dietary',
+    allergyNote: 'Allergies or dietary needs? Please let our staff know before ordering.',
+    availabilityNote: 'Ask our staff about daily availability & dietary preparations',
+    photoComingSoon: 'Photo coming soon',
+    freshFromKitchen: 'Fresh from the kitchen',
+    close: 'Close',
+    tryAgain: 'Try again',
+    loadErrorTitle: "We couldn't load the menu",
+    loadErrorMessage: 'Something went wrong while loading the menu. Please try again.',
+    emptyMenuTitle: 'The menu is empty',
+    emptyMenuMessage: "Check back soon — we're updating the menu.",
+    emptySearchTitle: 'No items found',
+    emptySearchMessage: 'Try a different search term or browse all categories.',
+    language: 'Language',
+    menuCategories: 'Menu categories',
+    categories: {
+      burgers: 'Burgers',
+      chicken: 'Chicken',
+      sides: 'Sides',
+      drinks: 'Drinks',
+      salads: 'Salads',
+      steaks: 'Steaks',
+    },
+  },
 };
 
+export const LOCALE_OPTIONS = [
+  { code: 'en', short: 'EN', name: 'English' },
+  { code: 'he', short: 'עב', name: 'עברית' },
+  { code: 'ar', short: 'عر', name: 'العربية' },
+];
+
+export const RTL_LOCALES = ['he', 'ar'];
+
+function humanizeKey(key) {
+  return String(key)
+    .replace(/[-_]+/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
 export function getCategoryLabel(locale, key) {
-  return translations[locale]?.categories?.[key] ?? key;
+  return translations[locale]?.categories?.[key] ?? humanizeKey(key);
+}
+
+export function formatCount(template, count) {
+  return template.replace('{count}', count);
 }

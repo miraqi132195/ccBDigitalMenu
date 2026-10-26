@@ -1,41 +1,41 @@
 import { memo } from 'react';
 import { useLanguage } from '../../i18n/LanguageContext';
+import { LOCALE_OPTIONS } from '../../i18n/translations';
 
 function LanguageSwitcherComponent() {
   const { locale, setLocale, t } = useLanguage();
 
   return (
     <div
-      className="flex items-center gap-1 rounded-full border border-zinc-800 bg-zinc-900 p-1"
+      className="flex shrink-0 items-center rounded-full bg-surface-container-high p-1"
       role="group"
       aria-label={t.language}
     >
-      <button
-        type="button"
-        onClick={() => setLocale('he')}
-        className={[
-          'min-h-[36px] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors sm:text-sm',
-          locale === 'he'
-            ? 'bg-amber-700 text-white'
-            : 'text-zinc-400 hover:text-white',
-        ].join(' ')}
-        aria-pressed={locale === 'he'}
-      >
-        עברית
-      </button>
-      <button
-        type="button"
-        onClick={() => setLocale('ar')}
-        className={[
-          'min-h-[36px] rounded-full px-3 py-1.5 text-xs font-semibold transition-colors sm:text-sm',
-          locale === 'ar'
-            ? 'bg-amber-700 text-white'
-            : 'text-zinc-400 hover:text-white',
-        ].join(' ')}
-        aria-pressed={locale === 'ar'}
-      >
-        العربية
-      </button>
+      {LOCALE_OPTIONS.map((option) => {
+        const isActive = locale === option.code;
+
+        return (
+          <button
+            key={option.code}
+            type="button"
+            lang={option.code}
+            onClick={() => setLocale(option.code)}
+            aria-pressed={isActive}
+            aria-label={option.name}
+            title={option.name}
+            className={[
+              'flex h-9 min-w-9 items-center justify-center rounded-full px-2.5',
+              'font-label text-[12px] font-bold transition-colors',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-container',
+              isActive
+                ? 'bg-surface-container-lowest text-primary shadow-[0_1px_3px_rgba(95,60,32,0.08)]'
+                : 'text-on-surface-variant hover:text-on-surface',
+            ].join(' ')}
+          >
+            {option.short}
+          </button>
+        );
+      })}
     </div>
   );
 }

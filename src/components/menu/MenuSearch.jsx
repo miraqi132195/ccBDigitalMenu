@@ -6,9 +6,9 @@ function MenuSearchComponent({ value, onChange }) {
   const { t } = useLanguage();
 
   return (
-    <div className="relative mx-auto w-full max-w-6xl px-4 sm:px-6">
+    <div className="relative">
       <Search
-        className="pointer-events-none absolute start-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-500 sm:start-6"
+        className="pointer-events-none absolute start-3.5 top-1/2 h-5 w-5 -translate-y-1/2 text-primary"
         aria-hidden="true"
       />
       <input
@@ -18,11 +18,12 @@ function MenuSearchComponent({ value, onChange }) {
         placeholder={t.searchPlaceholder}
         aria-label={t.searchPlaceholder}
         dir="auto"
+        enterKeyHint="search"
         className={[
-          'w-full rounded-2xl border border-zinc-800 bg-zinc-900 py-3.5 ps-12 pe-12',
-          'text-base text-white placeholder:text-zinc-500',
-          'transition-colors focus:border-amber-700/60 focus:outline-none focus:ring-2',
-          'focus:ring-amber-700/30 min-h-[48px]',
+          'h-12 w-full rounded-2xl bg-surface-container-lowest ps-11 text-start',
+          value ? 'pe-11' : 'pe-4',
+          'font-body text-[16px] text-on-surface placeholder:text-outline/70 md:text-body-md',
+          'shadow-sm transition-shadow focus:outline-none focus:ring-2 focus:ring-primary-container',
         ].join(' ')}
       />
       {value && (
@@ -30,9 +31,9 @@ function MenuSearchComponent({ value, onChange }) {
           type="button"
           onClick={() => onChange('')}
           className={[
-            'absolute end-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center',
-            'justify-center rounded-full text-zinc-400 hover:bg-zinc-800 hover:text-white',
-            'sm:end-6',
+            'absolute end-1.5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center',
+            'rounded-full bg-surface-container-high text-on-surface-variant transition-colors',
+            'hover:bg-surface-container-highest hover:text-on-surface',
           ].join(' ')}
           aria-label={t.clearSearch}
         >

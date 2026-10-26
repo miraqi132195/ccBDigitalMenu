@@ -1,4 +1,4 @@
-import { CATEGORY_KEYS } from '../constants/categories';
+import { getCategoryKeys, getVisibleCategoryKeys } from '../constants/categories';
 
 function matchesSearch(item, query) {
   const normalized = query.trim().toLowerCase();
@@ -15,11 +15,8 @@ export function filterMenuBySearch(menu, query) {
 
   const filtered = { ...menu };
 
-  CATEGORY_KEYS.forEach((key) => {
-    const items = menu[key];
-    if (!Array.isArray(items)) return;
-
-    filtered[key] = items.filter((item) => matchesSearch(item, query));
+  getCategoryKeys(menu).forEach((key) => {
+    filtered[key] = menu[key].filter((item) => matchesSearch(item, query));
   });
 
   return filtered;
@@ -28,7 +25,5 @@ export function filterMenuBySearch(menu, query) {
 export function hasVisibleItems(menu) {
   if (!menu) return false;
 
-  return CATEGORY_KEYS.some(
-    (key) => Array.isArray(menu[key]) && menu[key].length > 0,
-  );
+  return getVisibleCategoryKeys(menu).length > 0;
 }

@@ -1,48 +1,44 @@
 import { memo } from 'react';
-import { motion } from 'framer-motion';
-import { CATEGORY_EMOJI } from '../../constants/categories';
+import {
+  getCategoryEmoji,
+  getCategoryImage,
+  getCategorySectionId,
+} from '../../constants/categories';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { getCategoryLabel } from '../../i18n/translations';
-import { FoodCard } from './FoodCard';
+import { formatCount, getCategoryLabel } from '../../i18n/translations';
+import { CategoryHeader } from './CategoryHeader';
+import { MealCard } from './MealCard';
 
-function CategorySectionComponent({ categoryKey, items, onSelectItem }) {
-  const { locale } = useLanguage();
+function CategorySectionComponent({ categoryKey, items, index = 0, onSelectItem }) {
+  const { locale, t } = useLanguage();
 
   if (!items?.length) return null;
 
-  const label = getCategoryLabel(locale, categoryKey);
-  const emoji = CATEGORY_EMOJI[categoryKey];
+  const headingId = `${getCategorySectionId(categoryKey)}-title`;
 
   return (
-    <motion.section
-      id={`category-${categoryKey}`}
-      className="scroll-mt-36"
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.4 }}
-    >
-      <div className="mb-5 flex items-baseline gap-2">
-        <h2 className="text-xl font-bold text-white sm:text-2xl">
-          <span className="me-2" aria-hidden="true">
-            {emoji}
-          </span>
-          {label}
-        </h2>
-        <span className="text-sm font-medium text-zinc-500">({items.length})</span>
-      </div>
+    <section id={getCategorySectionId(categoryKey)} aria-labelledby={headingId}>
+      <CategoryHeader
+        headingId={headingId}
+        label={getCategoryLabel(locale, categoryKey)}
+        emoji={getCategoryEmoji(categoryKey)}
+        countLabel={formatCount(t.itemsCount, items.length)}
+        image={getCategoryImage(categoryKey)}
+        index={index}
+      />
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {items.map((item) => (
-          <FoodCard
-            key={item._id}
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-2 md:gap-5 lg:grid-cols-3">
+        {items.map((item, itemIndex) => (
+          <MealCard
+            key={item._id ?? `${categoryKey}-${itemIndex}`}
             item={item}
             categoryKey={categoryKey}
             onSelect={onSelectItem}
+            featured={itemIndex === 0}
           />
         ))}
       </div>
-    </motion.section>
+    </section>
   );
 }
 

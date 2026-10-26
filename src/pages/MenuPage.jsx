@@ -8,7 +8,7 @@ import { MenuEmpty } from '../components/menu/MenuEmpty';
 import { MenuError } from '../components/menu/MenuError';
 import { MenuSearch } from '../components/menu/MenuSearch';
 import { MenuSkeleton } from '../components/menu/MenuSkeleton';
-import { CATEGORY_KEYS } from '../constants/categories';
+import { getVisibleCategoryKeys } from '../constants/categories';
 import { useActiveCategory } from '../hooks/useActiveCategory';
 import { useMenu } from '../hooks/useMenu';
 import { filterMenuBySearch, hasVisibleItems } from '../utils/filterMenu';
@@ -17,7 +17,7 @@ const FoodDetailsModal = lazy(
   () => import('../components/menu/FoodDetailsModal'),
 );
 
-const STICKY_OFFSET = 128;
+const STICKY_OFFSET = 132;
 
 export default function MenuPage() {
   const { data: menu, isLoading, isError, error, refetch } = useMenu();
@@ -42,55 +42,61 @@ export default function MenuPage() {
     setSelectedCategoryKey(null);
   }, []);
 
-  const showEmptySearch = filteredMenu && searchQuery && !hasVisibleItems(filteredMenu);
-  const showEmptyMenu = filteredMenu && !searchQuery && !hasVisibleItems(filteredMenu);
+  const handleClearSearch = useCallback(() => setSearchQuery(''), []);
+
+  const isReady = !isLoading && !isError && Boolean(filteredMenu);
+  const showEmptySearch = isReady && searchQuery && !hasVisibleItems(filteredMenu);
+  const showEmptyMenu = isReady && !searchQuery && !hasVisibleItems(filteredMenu);
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="flex min-h-screen flex-col bg-surface">
       <Header />
 
-      <Hero />
+      <main className="flex-1">
+        <Hero>
+          {isReady && <MenuSearch value={searchQuery} onChange={setSearchQuery} />}
+        </Hero>
 
-      <div id="menu-categories" className="border-t border-zinc-900 bg-zinc-950 pb-16 pt-8">
-        {isLoading && <MenuSkeleton />}
+        <div id="menu-categories" className="pb-6">
+          {isLoading && <MenuSkeleton />}
 
-        {isError && (
-          <MenuError
-            message={error?.message}
-            onRetry={() => refetch()}
-          />
-        )}
-
-        {!isLoading && !isError && filteredMenu && (
-          <>
-            <div className="mb-6">
-              <MenuSearch value={searchQuery} onChange={setSearchQuery} />
-            </div>
-
-            <CategoryNav
-              menu={filteredMenu}
-              activeCategory={activeCategory}
-              stickyOffset={STICKY_OFFSET}
+          {isError && (
+            <MenuError
+              message={error?.message}
+              onRetry={() => refetch()}
             />
+          )}
 
-            <div className="mx-auto mt-8 w-full max-w-6xl space-y-12 px-4 sm:px-6">
-              {showEmptySearch && <MenuEmpty isSearchResult />}
+          {isReady && (
+            <>
+              <CategoryNav
+                menu={filteredMenu}
+                activeCategory={activeCategory}
+                stickyOffset={STICKY_OFFSET}
+              />
 
-              {showEmptyMenu && <MenuEmpty />}
+              <div className="mx-auto mt-3 w-full max-w-6xl space-y-8 px-4 md:mt-6 md:space-y-12 md:px-8">
+                {showEmptySearch && (
+                  <MenuEmpty isSearchResult onClearSearch={handleClearSearch} />
+                )}
 
-              {!showEmptySearch && !showEmptyMenu &&
-                CATEGORY_KEYS.map((key) => (
-                  <CategorySection
-                    key={key}
-                    categoryKey={key}
-                    items={filteredMenu[key]}
-                    onSelectItem={handleSelectItem}
-                  />
-                ))}
-            </div>
-          </>
-        )}
-      </div>
+                {showEmptyMenu && <MenuEmpty />}
+
+                {!showEmptySearch && !showEmptyMenu &&
+                  getVisibleCategoryKeys(filteredMenu).map((key, index) => (
+                    <CategorySection
+                      key={key}
+                      categoryKey={key}
+                      index={index}
+                      items={filteredMenu[key]}
+                      onSelectItem={handleSelectItem}
+                    />
+                  ))}
+              </div>
+            </>
+          )}
+        </div>
+      </main>
 
       <Footer />
 

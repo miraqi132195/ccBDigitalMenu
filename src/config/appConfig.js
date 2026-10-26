@@ -18,5 +18,5 @@ export const APP_CONFIG = {
   RESTAURANT_NAME: 'Chilli Cheese Burger',
   RESTAURANT_SLOGAN: 'Signature Taste',
   DEFAULT_LOCALE: 'he',
-  SUPPORTED_LOCALES: ['he', 'ar'],
+  SUPPORTED_LOCALES: ['he', 'ar', 'en'],
 };

@@ -1,66 +1,41 @@
 import { memo } from 'react';
-import { motion } from 'framer-motion';
-import { ChevronDown } from 'lucide-react';
-import logo from '../../assets/logo.png';
 import { useLanguage } from '../../i18n/LanguageContext';
-import { Button } from '../ui/Button';
-import { scrollToCategories } from '../../utils/scrollTo';
 
-const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1550547347-06eea5a72d1e?w=1920&q=80&auto=format&fit=crop';
-
-function HeroComponent() {
+function HeroComponent({ children }) {
   const { t } = useLanguage();
 
-  const handleBrowseMenu = () => {
-    scrollToCategories(120);
-  };
-
   return (
-    <section className="relative flex min-h-[70vh] items-center justify-center overflow-hidden sm:min-h-[78vh]">
-      <img
-        src={HERO_IMAGE}
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover"
-        loading="eager"
-        fetchPriority="high"
-      />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-zinc-950" />
-
-      <motion.div
-        className="relative z-10 mx-auto flex max-w-2xl flex-col items-center px-5 text-center sm:px-6"
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, ease: 'easeOut' }}
-      >
-        <motion.img
-          src={logo}
-          alt={`${t.restaurantName} logo`}
-          className="mb-5 h-28 w-28 rounded-full object-cover amber-glow sm:mb-6 sm:h-36 sm:w-36"
-          width={144}
-          height={144}
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.15, duration: 0.6 }}
+    <section className="mx-auto w-full max-w-6xl px-4 pb-3 pt-3 md:px-8 md:pt-6">
+      <div className="relative overflow-hidden rounded-3xl bg-surface-container p-5 shadow-[0_4px_20px_-2px_rgba(95,60,32,0.08)] md:p-10">
+        <div className="bg-halftone pointer-events-none absolute inset-0 opacity-[0.04]" aria-hidden="true" />
+        <div
+          className="pointer-events-none absolute -start-12 -top-12 h-44 w-44 rounded-full bg-secondary-container/30 blur-2xl md:h-72 md:w-72"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -bottom-10 -end-10 h-36 w-36 rounded-full bg-primary-container/20 blur-xl md:h-64 md:w-64"
+          aria-hidden="true"
         />
 
-        <h2 className="mb-2 text-2xl font-bold tracking-tight text-white sm:text-4xl">
-          {t.restaurantName}
-        </h2>
+        <div className="relative z-10 flex flex-col gap-1.5 md:max-w-2xl md:gap-3">
+          <div className="inline-flex items-center gap-1.5 self-start rounded-full bg-primary-container px-2.5 py-1 font-label text-label-tag uppercase text-white shadow-sm">
+            <span>CCB</span>
+            <span aria-hidden="true">✦</span>
+            <span>{t.slogan}</span>
+          </div>
 
-        <p className="mb-6 text-sm font-medium uppercase tracking-[0.2em] text-amber-700 sm:text-base">
-          {t.slogan}
-        </p>
+          <h1 className="mt-1 font-headline text-headline-lg-mobile leading-none tracking-tight text-on-surface md:text-display-hero">
+            {t.heroTitle}{' '}
+            <span className="text-primary-container">{t.heroTitleAccent}</span>
+          </h1>
 
-        <p className="mb-8 max-w-md text-sm leading-relaxed text-zinc-300 sm:mb-10 sm:text-base">
-          {t.heroSubtitle}
-        </p>
+          <p className="font-body text-body-md font-medium text-on-surface-variant md:text-body-lg">
+            {t.heroSubtitle}
+          </p>
+        </div>
 
-        <Button size="lg" onClick={handleBrowseMenu} className="min-h-[48px] min-w-[200px]">
-          {t.browseMenu}
-          <ChevronDown className="h-5 w-5" />
-        </Button>
-      </motion.div>
+        {children && <div className="relative z-10 mt-4 md:mt-6 md:max-w-xl">{children}</div>}
+      </div>
     </section>
   );
 }

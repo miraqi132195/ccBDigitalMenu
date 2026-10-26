@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { APP_CONFIG } from '../config/appConfig';
-import { translations } from './translations';
+import { RTL_LOCALES, translations } from './translations';
 
 const STORAGE_KEY = 'ccb-menu-locale';
 
@@ -23,19 +23,21 @@ export function LanguageProvider({ children }) {
     localStorage.setItem(STORAGE_KEY, nextLocale);
   }, []);
 
+  const isRtl = RTL_LOCALES.includes(locale);
+
   useEffect(() => {
     document.documentElement.lang = locale;
-    document.documentElement.dir = 'rtl';
-  }, [locale]);
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+  }, [locale, isRtl]);
 
   const value = useMemo(
     () => ({
       locale,
       setLocale,
-      t: translations[locale],
-      isRtl: true,
+      t: translations[locale] ?? translations[APP_CONFIG.DEFAULT_LOCALE],
+      isRtl,
     }),
-    [locale, setLocale],
+    [locale, setLocale, isRtl],
   );
 
   return (
