@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Heebo', 'Noto Sans Arabic', ui-sans-serif, system-ui, sans-serif;
+  --color-ccb-amber: #b45309;
+  --color-ccb-orange: #f97316;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html[dir='rtl'] {
+    direction: rtl;
+  }
+
+  body {
+    @apply bg-zinc-950 text-zinc-100 antialiased;
+    font-family: var(--font-sans);
+    text-align: start;
+  }
+
+  ::selection {
+    @apply bg-amber-700/40 text-white;
+  }
+}
+
+@layer utilities {
+  .glass-header {
+    @apply border-b border-zinc-800/80 bg-zinc-950/70 backdrop-blur-xl;
+  }
+
+  .glass-nav {
+    @apply border-b border-zinc-800/60 bg-zinc-950/85 backdrop-blur-lg;
+  }
+
+  .amber-glow {
+    box-shadow: 0 0 24px rgba(180, 83, 9, 0.25);
+  }
+
+  .amber-glow-hover {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .amber-glow-hover:hover {
+    box-shadow: 0 8px 32px rgba(180, 83, 9, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
